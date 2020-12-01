@@ -1,35 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
- 
-<head>
-    <title>CS 6400</title>
- 
- 
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
- 
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
- 
- 
-</head>
- 
-<body>
- 
-    <div class="container">
-        <div class="header">
-            <nav>
-                <ul class="nav nav-pills pull-right">
-                    <li role="presentation" class="active"><a href="#">Home</a>
-                    </li>
-                    <li role="presentation"><a href="showSignIn">Sign In</a>
-                    </li>
-                    <li role="presentation"><a href="showSignUp">Sign Up</a>
-                    </li>
-                </ul>
-            </nav>
-            <h3 class="text-muted">CS6400 Group5 Project</h3>
+<html>
+    <head>
+        <title>CS6400 Project</title>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
+        <link rel="stylesheet" type="text/css" href="static/home/share.css" />
+        <link type="text/css" rel="stylesheet" media="only screen and (max-width: 600px)" href="static/home/mobile.css" />
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    </head>
+    <body>
+        <h1>Traveler's Diary</h1>
+
+        <div id="container">
+            <p id="welcome">
+            </p>
+            <ul id="actions_1">
+                <li>
+                    <h2> Paris</h2>
+                    <div class="photo">
+                      <img src="static/img/paris.jpg" alt="Mountain picture" />
+                    </div>
+                    <button class="Paris">Explore</button>
+               </li>
+                 <li>
+
+                </li>
+                <li>
+                    <h2>Atlanta</h2>
+                    <div class="photo">
+                      <img src="static/img/atlanta.png" alt="Mountain picture" />
+                    </div>
+                    <button class="Atlanta">Explore</button>
+                </li>
+            </ul>
+            </div>
+
+        <div id="container">
+            <p id="welcome">
+                <b>Hello, photo-lover!</b><br /><br />We hope you're having an awesome day. 
+                <br /><br />
+                <b>Thanks so much,</b>
+                <br />
+                Our CS 6400 Team
+            </p>
+            <div id="progress">
+                <div class="percent">
+                    <div class="number">0%</div>
+                </div>
+            </div>
+            <ul id="actions">
+                <li>
+                    <h2>1. Share on Facebook</h2>
+                    <p>Share Explorify with your friends</p>
+                    <button class="facebook">Share</button>
+                </li>
+                <li>
+                    <h2>2. Post on Twitter</h2>
+                    <p>Hook your following up</p>
+                    <button class="twitter">Tweet</button>
+                </li>
+            </ul>
         </div>
- 
-    </div>
-</body>
- 
+        <!-- <script src="static/home/js/share.js"></script> -->
+    </body>
 </html>
