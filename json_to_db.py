@@ -7,10 +7,12 @@ import csv
 import datetime
 
 def data_from_json_text(filename, of, pl):
+	count = 0
 	with open(filename) as f:
-		filecity = filename.split('/')[-1][:-5]
-		main_tag = filecity[:-2]
-		print("City: " + filecity)
+		filecity = filename.split('/')[-1]
+		filecity1 = filecity.split('_',1)[0]
+		main_tag = filecity1
+		print("City: " + filecity1)
 		data = json.load(f)
 		for i in range(0, len(data['GraphImages'])):
 			print(i)
@@ -40,9 +42,11 @@ def data_from_json_text(filename, of, pl):
 			try:
 				username = data1['graphql']['shortcode_media']['owner']['username']
 				profile_pic = data1['graphql']['shortcode_media']['owner']['profile_pic_url']
+				acc_cap = data1['graphql']['shortcode_media']['accessibility_caption']
 			except:
 				username = ''
 				profile_pic = ''
+				acc_cap = ''
 
 			if (post_id not in pl):
 				of.write("Index: " + str(i) + "\n")
@@ -64,14 +68,24 @@ def data_from_json_text(filename, of, pl):
 					of.write("tags: " + ', '.join((tags)) + "\n")
 
 				time_conv = datetime.datetime.fromtimestamp(int(timestamp)).strftime('%Y-%m-%d %H:%M:%S')
-				
 				of.write("timestamp: " + time_conv + "\n")
+
+				try:
+					contains = acc_cap.split("contain:",1)[1]
+				except:
+					contains = ""
+				of.write("accessibility_caption: " + contains + "\n")
+
 				of.write("im_640: " + im_640 + "\n")
 				of.write("\n")
 
 				pl.append(post_id)
+				count = count + 1
 			else:
-				print("Blocked duplicate")
+				print("Blocked duplicate: PostID = " + str(post_id))
+
+	return count
+
 
 def data_from_json(filename, jsonwriter):
 	with open(filename) as f:
@@ -120,10 +134,14 @@ def json_prep(json_path, of, of_csv):
 	jsonwriter = csv.writer(of_csv, delimiter='|')
 	jsonwriter.writerow(['main_tag', 'username', 'profile_pic', 'likes', 'caption', 'comments', 'post_id', 'is_video', 'owner_id', 'shortcode', 'locations', 'timestamp', 'im_640', 'tags'])
 	
+	count = 0
 	post_lists =[]
 	for filename in all_jsons:
 		#data_from_json(filename, jsonwriter)
-		data_from_json_text(filename, of, post_lists)
+		json_count = data_from_json_text(filename, of, post_lists)
+		count = count + json_count
+
+	return count, post_lists
 
 if __name__ == "__main__":
 	json_path = os.getcwd() + "/jsons/"
@@ -137,4 +155,7 @@ if __name__ == "__main__":
   		os.remove("temp_db.csv")
 	of_csv = open('temp_db.csv', 'a')
 	
-	json_prep(json_path, of, of_csv)
+	count, post_lists = json_prep(json_path, of, of_csv)
+
+	print("Posts Scraped: " + str(count))
+	print(len(post_lists))
