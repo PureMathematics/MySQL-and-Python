@@ -1,0 +1,42 @@
+Index: 0
+city: taipei
+username: k3lvinch
+profile_pic: https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/s150x150/37908778_228837194629981_2670544522156441600_n.jpg?_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_ohc=YpbPpWwbTaAAX-NQQiA&tp=1&oh=cf8eb8e70b910d23c805f9973b70ed74&oe=5FF0D195
+display_url: https://scontent-atl3-1.cdninstagram.com/v/t51.2885-15/e35/p1080x1080/128475932_377081983358304_941390278583184620_n.jpg?_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=1&_nc_ohc=bf5mxsIt9e4AX9ZGjD8&tp=1&oh=b327c49d1c6c301d2db653e17a4364ab&oe=5FF2C7A9
+likes: 8039
+caption: Thanks for being in my childhood memories 
+台北/ Old man with Corns 2019
+__________________
+#streets_storytelling
+comments: 115
+post_id: 2455295484104903945
+is_video: False
+owner_id: 2214542099
+shortcode: CIS9jvssY0J
+locations: Taipei, Taiwan
+tags: streets_storytelling
+timestamp: 2020-12-02 08:00:52
+accessibility_caption:  1 person, food.
+im_640: https://scontent-atl3-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.179.1440.1440a/s640x640/128475932_377081983358304_941390278583184620_n.jpg?_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=1&_nc_ohc=bf5mxsIt9e4AX9ZGjD8&tp=1&oh=01a7191597b75e66f98d97d5c5fc9ab9&oe=5FF21AD6
+
+Index: 1
+city: taipei
+username: 
+profile_pic: 
+display_url: https://scontent-atl3-1.cdninstagram.com/v/t51.2885-15/e35/p1080x1080/128538942_421799035857387_5037128490573846158_n.jpg?_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=103&_nc_ohc=IJj5H0GnwmwAX9tD0vn&tp=1&oh=7bafadb0334e266d0e439c701f325b87&oe=5FF336A6
+likes: 4018
+caption: On the way back to home 
+一個人的時間/ Taipei 2020
+__________________
+#streetphotography
+comments: 76
+post_id: 2454571878131602684
+is_video: False
+owner_id: 2214542099
+shortcode: CIQZB5HspT8
+locations: Taipei, Taiwan
+tags: streetphotography
+timestamp: 2020-12-01 08:03:11
+accessibility_caption: 
+im_640: https://scontent-atl3-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.179.1440.1440a/s640x640/128538942_421799035857387_5037128490573846158_n.jpg?_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=103&_nc_ohc=IJj5H0GnwmwAX9tD0vn&tp=1&oh=3c7840639c02097009091dd75e97cf73&oe=5FF152E6
+
