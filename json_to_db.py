@@ -10,9 +10,10 @@ def data_from_json_text(filename, of, pl):
 	count = 0
 	with open(filename) as f:
 		filecity = filename.split('/')[-1]
-		filecity1 = filecity.split('_',1)[0]
-		main_tag = filecity1
-		print("City: " + filecity1)
+		filecity1 = filecity.split('_',1)
+		filecity1.pop()
+		main_tag = ' '.join(filecity1)
+		print("City: " + str(main_tag))
 		data = json.load(f)
 		for i in range(0, len(data['GraphImages'])):
 			print(i)
@@ -65,16 +66,26 @@ def data_from_json_text(filename, of, pl):
 				if (tags == None):
 					of.write("tags: \n")
 				else:
-					of.write("tags: " + ', '.join((tags)) + "\n")
+					of.write("tags: " + ','.join((tags)) + "\n")
 
 				time_conv = datetime.datetime.fromtimestamp(int(timestamp)).strftime('%Y-%m-%d %H:%M:%S')
 				of.write("timestamp: " + time_conv + "\n")
 
 				try:
-					contains = acc_cap.split("contain:",1)[1]
+					contains = acc_cap.split("contain: ",1)[1] #Removes caption before "Image may contain: "
 				except:
 					contains = ""
-				of.write("accessibility_caption: " + contains + "\n")
+				if contains != "":
+					cl = []
+					contains = contains.split(".")[0] #Removes everything after the period -> rest of caption
+					contains = contains.split(", ")
+					temp = contains[-1].split(" and ")
+					if len(temp) > 1:
+						contains.pop()
+						contains.append(temp[0])
+						contains.append(temp[1])
+
+				of.write("contains: " + ','.join((contains)) + "\n")
 
 				of.write("im_640: " + im_640 + "\n")
 				of.write("\n")
@@ -85,49 +96,6 @@ def data_from_json_text(filename, of, pl):
 				print("Blocked duplicate: PostID = " + str(post_id))
 
 	return count
-
-
-def data_from_json(filename, jsonwriter):
-	with open(filename) as f:
-		filecity = filename.split('/')[-1][:-5]
-		main_tag = filecity[:-2]
-		print("City: " + filecity)
-		data = json.load(f)
-		for i in range(0, len(data['GraphImages'])):
-			print(i)
-			display_url = data['GraphImages'][i]['display_url']
-			likes = int(data['GraphImages'][i]['edge_liked_by']['count'])
-			if data['GraphImages'][i]['edge_media_to_caption']['edges']:
-				caption = data['GraphImages'][i]['edge_media_to_caption']['edges'][0]['node']['text']
-			comments = int(data['GraphImages'][i]['edge_media_to_comment']['count'])
-			post_id = data['GraphImages'][i]['id']
-			is_video = data['GraphImages'][i]['is_video']
-			owner_id = data['GraphImages'][i]['owner']['id']
-			shortcode = data['GraphImages'][i]['shortcode']
-			tags = data['GraphImages'][i].get('tags')
-			if (tags == None):
-				tags = ""
-			timestamp = data['GraphImages'][i]['taken_at_timestamp']
-			im_640 = data['GraphImages'][i]['thumbnail_resources'][4]['src']
-
-			# Get locations
-			url = "https://www.instagram.com/p/{0}/?__a=1".format(shortcode)
-			r = requests.get(url)
-			data1 = json.loads(r.text)
-			try:
-				location = data1['graphql']['shortcode_media']['location']['name'] # get location for a post
-			except:
-				location = '' # if location is NULL
-			try:
-				username = data1['graphql']['shortcode_media']['owner']['username']
-				profile_pic = data1['graphql']['shortcode_media']['owner']['profile_pic_url']
-			except:
-				username = ''
-				profile_pic = ''
-
-			tags_str = ', '.join((tags))
-
-			jsonwriter.writerow([main_tag, username, profile_pic, str(likes), caption, str(comments), post_id, str(is_video), owner_id, shortcode, location, str(timestamp), im_640, str(tags_str)])
 
 def json_prep(json_path, of, of_csv):
 	all_jsons = glob.glob(json_path + "*.json")
@@ -149,13 +117,62 @@ if __name__ == "__main__":
 	if os.path.exists("temp_db.txt"):
   		os.remove("temp_db.txt")
 	of = open("temp_db.txt", "w")
-	# filename = json_path + "tokyo_3.json"
-	# data_from_json_text(filename, of)
+
+	post_lists = []
+
+	filename = json_path + "tokyo_3.json"
+	post_lists = data_from_json_text(filename, of, post_lists)
+
 	if os.path.exists("temp_db.csv"):
   		os.remove("temp_db.csv")
 	of_csv = open('temp_db.csv', 'a')
 	
-	count, post_lists = json_prep(json_path, of, of_csv)
+	#count, post_lists = json_prep(json_path, of, of_csv)
 
-	print("Posts Scraped: " + str(count))
-	print(len(post_lists))
+	#print("Posts Scraped: " + str(count))
+	#print(len(post_lists))
+
+
+
+# def data_from_json(filename, jsonwriter):
+# 	with open(filename) as f:
+# 		filecity = filename.split('/')[-1][:-5]
+# 		main_tag = filecity[:-2]
+# 		print("City: " + filecity)
+# 		data = json.load(f)
+# 		for i in range(0, len(data['GraphImages'])):
+# 			print(i)
+# 			display_url = data['GraphImages'][i]['display_url']
+# 			likes = int(data['GraphImages'][i]['edge_liked_by']['count'])
+# 			if data['GraphImages'][i]['edge_media_to_caption']['edges']:
+# 				caption = data['GraphImages'][i]['edge_media_to_caption']['edges'][0]['node']['text']
+# 			comments = int(data['GraphImages'][i]['edge_media_to_comment']['count'])
+# 			post_id = data['GraphImages'][i]['id']
+# 			is_video = data['GraphImages'][i]['is_video']
+# 			owner_id = data['GraphImages'][i]['owner']['id']
+# 			shortcode = data['GraphImages'][i]['shortcode']
+# 			tags = data['GraphImages'][i].get('tags')
+# 			if (tags == None):
+# 				tags = ""
+# 			timestamp = data['GraphImages'][i]['taken_at_timestamp']
+# 			im_640 = data['GraphImages'][i]['thumbnail_resources'][4]['src']
+
+# 			# Get locations
+# 			url = "https://www.instagram.com/p/{0}/?__a=1".format(shortcode)
+# 			r = requests.get(url)
+# 			data1 = json.loads(r.text)
+# 			try:
+# 				location = data1['graphql']['shortcode_media']['location']['name'] # get location for a post
+# 			except:
+# 				location = '' # if location is NULL
+# 			try:
+# 				username = data1['graphql']['shortcode_media']['owner']['username']
+# 				profile_pic = data1['graphql']['shortcode_media']['owner']['profile_pic_url']
+# 			except:
+# 				username = ''
+# 				profile_pic = ''
+
+# 			tags_str = ', '.join((tags))
+
+# 			jsonwriter.writerow([main_tag, username, profile_pic, str(likes), caption, str(comments), post_id, str(is_video), owner_id, shortcode, location, str(timestamp), im_640, str(tags_str)])
+
