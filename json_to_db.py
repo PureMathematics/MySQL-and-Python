@@ -4,7 +4,7 @@ import glob
 import requests
 import csv
 
-def data_from_json_text(filename, of):
+def data_from_json_text(filename, of, pl):
 	with open(filename) as f:
 		filecity = filename.split('/')[-1][:-5]
 		main_tag = filecity[:-2]
@@ -42,26 +42,31 @@ def data_from_json_text(filename, of):
 				username = ''
 				profile_pic = ''
 
-			of.write("Index: " + str(i) + "\n")
-			of.write("city: " + main_tag + "\n")
-			of.write("username: " + username + "\n")
-			of.write("profile_pic: " + profile_pic + "\n")
-			of.write("display_url: " + display_url + "\n")
-			of.write("likes: " + str(likes) + "\n")
-			of.write("caption: " + caption + "\n")
-			of.write("comments: " + str(comments) + "\n")
-			of.write("post_id: " + post_id + "\n")
-			of.write("is_video: " + str(is_video) + "\n")
-			of.write("owner_id: " + owner_id + "\n")
-			of.write("shortcode: " + shortcode + "\n")
-			of.write("locations: " + location + "\n")
-			if (tags == None):
-				of.write("tags: \n")
+			if (post_id not in pl):
+				of.write("Index: " + str(i) + "\n")
+				of.write("city: " + main_tag + "\n")
+				of.write("username: " + username + "\n")
+				of.write("profile_pic: " + profile_pic + "\n")
+				of.write("display_url: " + display_url + "\n")
+				of.write("likes: " + str(likes) + "\n")
+				of.write("caption: " + caption + "\n")
+				of.write("comments: " + str(comments) + "\n")
+				of.write("post_id: " + post_id + "\n")
+				of.write("is_video: " + str(is_video) + "\n")
+				of.write("owner_id: " + owner_id + "\n")
+				of.write("shortcode: " + shortcode + "\n")
+				of.write("locations: " + location + "\n")
+				if (tags == None):
+					of.write("tags: \n")
+				else:
+					of.write("tags: " + ', '.join((tags)) + "\n")
+				of.write("timestamp: " + str(timestamp) + "\n")
+				of.write("im_640: " + im_640 + "\n")
+				of.write("\n")
+
+				pl.append(post_id)
 			else:
-				of.write("tags: " + ', '.join((tags)) + "\n")
-			of.write("timestamp: " + str(timestamp) + "\n")
-			of.write("im_640: " + im_640 + "\n")
-			of.write("\n")
+				print("Blocked duplicate")
 
 def data_from_json(filename, jsonwriter):
 	with open(filename) as f:
@@ -109,17 +114,22 @@ def json_prep(json_path, of, of_csv):
 	all_jsons = glob.glob(json_path + "*.json")
 	jsonwriter = csv.writer(of_csv, delimiter='|')
 	jsonwriter.writerow(['main_tag', 'username', 'profile_pic', 'likes', 'caption', 'comments', 'post_id', 'is_video', 'owner_id', 'shortcode', 'locations', 'timestamp', 'im_640', 'tags'])
+	
+	post_lists =[]
 	for filename in all_jsons:
-		data_from_json(filename, jsonwriter)
+		#data_from_json(filename, jsonwriter)
+		data_from_json_text(filename, of, post_lists)
 
 if __name__ == "__main__":
 	json_path = os.getcwd() + "/jsons/"
 
-	if os.path.exists("temp_db.csv"):
-  		os.remove("temp_db.csv")
+	if os.path.exists("temp_db.txt"):
+  		os.remove("temp_db.txt")
 	of = open("temp_db.txt", "w")
 	# filename = json_path + "tokyo_3.json"
 	# data_from_json_text(filename, of)
+	if os.path.exists("temp_db.csv"):
+  		os.remove("temp_db.csv")
 	of_csv = open('temp_db.csv', 'a')
 	
 	json_prep(json_path, of, of_csv)
