@@ -3,6 +3,8 @@ import os
 import glob
 import requests
 import csv
+import time
+
 
 import datetime
 
@@ -10,7 +12,7 @@ def data_from_json_text(filename, of, pl):
 	count = 0
 	with open(filename) as f:
 		filecity = filename.split('/')[-1]
-		filecity1 = filecity.split('_',1)
+		filecity1 = filecity.split('_')
 		filecity1.pop()
 		main_tag = ' '.join(filecity1)
 		print("City: " + str(main_tag))
@@ -97,40 +99,41 @@ def data_from_json_text(filename, of, pl):
 
 	return count
 
-def json_prep(json_path, of, of_csv):
+def json_prep(json_path, of):
 	all_jsons = glob.glob(json_path + "*.json")
-	jsonwriter = csv.writer(of_csv, delimiter='|')
-	jsonwriter.writerow(['main_tag', 'username', 'profile_pic', 'likes', 'caption', 'comments', 'post_id', 'is_video', 'owner_id', 'shortcode', 'locations', 'timestamp', 'im_640', 'tags'])
-	
+	# jsonwriter = csv.writer(of_csv, delimiter='|')
+	# jsonwriter.writerow(['main_tag', 'username', 'profile_pic', 'likes', 'caption', 'comments', 'post_id', 'is_video', 'owner_id', 'shortcode', 'locations', 'timestamp', 'im_640', 'tags'])
+
 	count = 0
 	post_lists =[]
 	for filename in all_jsons:
-		#data_from_json(filename, jsonwriter)
 		json_count = data_from_json_text(filename, of, post_lists)
 		count = count + json_count
 
 	return count, post_lists
 
 if __name__ == "__main__":
+
 	json_path = os.getcwd() + "/jsons/"
 
 	if os.path.exists("temp_db.txt"):
   		os.remove("temp_db.txt")
 	of = open("temp_db.txt", "w")
 
-	post_lists = []
+	# post_lists = []
+	# filename = json_path + "san_diego_1.json"
+	# post_lists = data_from_json_text(filename, of, post_lists)
+	start_time = time.time()
+	count, post_lists = json_prep(json_path, of)
 
-	filename = json_path + "tokyo_3.json"
-	post_lists = data_from_json_text(filename, of, post_lists)
+	print("Posts Scraped: " + str(count))
+	print(len(post_lists))
+	print("--- %s seconds ---" % (time.time() - start_time))
 
-	if os.path.exists("temp_db.csv"):
-  		os.remove("temp_db.csv")
-	of_csv = open('temp_db.csv', 'a')
-	
-	#count, post_lists = json_prep(json_path, of, of_csv)
 
-	#print("Posts Scraped: " + str(count))
-	#print(len(post_lists))
+	# if os.path.exists("temp_db.csv"):
+	# os.remove("temp_db.csv")
+	# of_csv = open('temp_db.csv', 'a')
 
 
 
