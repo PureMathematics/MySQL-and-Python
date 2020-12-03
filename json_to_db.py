@@ -4,6 +4,8 @@ import glob
 import requests
 import csv
 
+import datetime
+
 def data_from_json_text(filename, of, pl):
 	with open(filename) as f:
 		filecity = filename.split('/')[-1][:-5]
@@ -60,7 +62,10 @@ def data_from_json_text(filename, of, pl):
 					of.write("tags: \n")
 				else:
 					of.write("tags: " + ', '.join((tags)) + "\n")
-				of.write("timestamp: " + str(timestamp) + "\n")
+
+				time_conv = datetime.datetime.fromtimestamp(int(timestamp)).strftime('%Y-%m-%d %H:%M:%S')
+				
+				of.write("timestamp: " + time_conv + "\n")
 				of.write("im_640: " + im_640 + "\n")
 				of.write("\n")
 
