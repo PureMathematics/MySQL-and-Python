@@ -4,6 +4,7 @@ import glob
 import requests
 import csv
 import time
+import simplejson
 
 
 import datetime
@@ -139,22 +140,34 @@ if __name__ == "__main__":
 	post_lists =[]
 
 	start_time = time.time()
-	# count, post_lists = json_prep(json_path, of, , post_lists, data_dict)
-	# filename = json_path + "san_diego_1.json"
-	# post_lists = data_from_json_text(filename, of, post_lists, data_dict)
+	#filename = json_path + "san_diego_1.json"
+	#count = data_from_json_text(filename, of, post_lists, data_dict)
 
 	for filename in all_jsons:
 		json_count = data_from_json_text(filename, of, post_lists, data_dict)
 		count = count + json_count
 
-	print("Posts Scraped: " + str(count))
-	print(len(post_lists))
-	print("--- %s seconds ---" % (time.time() - start_time))
+	# print("Posts Scraped: " + str(count))
+	# print(len(post_lists))
+	# print("--- %s seconds ---" % (time.time() - start_time))
 
-	if os.path.exists("json_db.txt"):
-  		os.remove("json_db.txt")
-	with open('json_db.txt', 'w') as outfile:
-		json.dump(data_dict, outfile)
+
+	with open('json_db.json', 'w') as outfile:
+		json.dump(data_dict, outfile, indent = 4)
+
+	# with open('temp_json.json','r') as infile:
+	# 	mydata = json.loads(infile)
+
+	# print json.dumps(mydata, indent=4)
+
+	# outfile = open("data.json", "w")
+	# # magic happens here to make it pretty-printed
+	# outfile.write(simplejson.dumps(simplejson.loads(data_dict), indent=4, sort_keys=True))
+	# outfile.close()
+
+	# if os.path.exists("temp_json.json"):
+ #  		os.remove("temp_json.json")
+
 
 	# if os.path.exists("temp_db.csv"):
 	# os.remove("temp_db.csv")
