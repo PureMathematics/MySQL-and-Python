@@ -8,7 +8,7 @@ import time
 
 import datetime
 
-def data_from_json_text(filename, of, pl):
+def data_from_json_text(filename, of, pl, data_dict):
 	count = 0
 	with open(filename) as f:
 		filecity = filename.split('/')[-1]
@@ -92,6 +92,23 @@ def data_from_json_text(filename, of, pl):
 				of.write("im_640: " + im_640 + "\n")
 				of.write("\n")
 
+				data_dict['post'].append({
+					'post_id':post_id,
+					'main_tag':main_tag,
+					'shortcode':shortcode,
+					'likes':likes,
+					'comments':comments,
+					'caption':caption,
+					'owner_id':owner_id,
+					'username':username,
+					'contains':contains,
+					'timestamp':time_conv,
+					'locations':location,
+					'tags':tags,
+					'profile_pic':profile_pic,
+					'im_640':im_640
+				})
+
 				pl.append(post_id)
 				count = count + 1
 			else:
@@ -99,16 +116,8 @@ def data_from_json_text(filename, of, pl):
 
 	return count
 
-def json_prep(json_path, of):
-	all_jsons = glob.glob(json_path + "*.json")
-	# jsonwriter = csv.writer(of_csv, delimiter='|')
-	# jsonwriter.writerow(['main_tag', 'username', 'profile_pic', 'likes', 'caption', 'comments', 'post_id', 'is_video', 'owner_id', 'shortcode', 'locations', 'timestamp', 'im_640', 'tags'])
+def json_prep(json_path, of, data_dict):
 
-	count = 0
-	post_lists =[]
-	for filename in all_jsons:
-		json_count = data_from_json_text(filename, of, post_lists)
-		count = count + json_count
 
 	return count, post_lists
 
@@ -120,16 +129,32 @@ if __name__ == "__main__":
   		os.remove("temp_db.txt")
 	of = open("temp_db.txt", "w")
 
-	# post_lists = []
-	# filename = json_path + "san_diego_1.json"
-	# post_lists = data_from_json_text(filename, of, post_lists)
+
+	post_lists = []
+
+	data_dict = {}
+	data_dict['post'] = []
+	all_jsons = glob.glob(json_path + "*.json")
+	count = 0
+	post_lists =[]
+
 	start_time = time.time()
-	count, post_lists = json_prep(json_path, of)
+	# count, post_lists = json_prep(json_path, of, , post_lists, data_dict)
+	# filename = json_path + "san_diego_1.json"
+	# post_lists = data_from_json_text(filename, of, post_lists, data_dict)
+
+	for filename in all_jsons:
+		json_count = data_from_json_text(filename, of, post_lists, data_dict)
+		count = count + json_count
 
 	print("Posts Scraped: " + str(count))
 	print(len(post_lists))
 	print("--- %s seconds ---" % (time.time() - start_time))
 
+	if os.path.exists("json_db.txt"):
+  		os.remove("json_db.txt")
+	with open('json_db.txt', 'w') as outfile:
+		json.dump(data_dict, outfile)
 
 	# if os.path.exists("temp_db.csv"):
 	# os.remove("temp_db.csv")
