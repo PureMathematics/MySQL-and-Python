@@ -10,16 +10,17 @@ connect('Post', port=27017)
 
 #JSON PARSING and Saving into DB
 with open('../json_db_lite.json') as json_file:
-    data = json.load(json_file)
-    for p in data['post']:
-        posting = Posting(post_id = p['post_id'],likes = p['likes'], main_tag = p['main_tag'])
+	data = json.load(json_file)
+	for p in data['post']:
+		posting = Posting(post_id = p['post_id'],likes = p['likes'], main_tag = p['main_tag'])
 main_tag_list = []
 image_list = []
 with open('../json_db_lite.json') as json_file:
-    data = json.load(json_file)
-    for p in data['post']:
-		main_tag.append(p['main_tag'])
+	data = json.load(json_file)
+	for p in data['post']:
+		main_tag_list.append(p['main_tag'])
 		image_list.append(p['im_640'])
+
 def get_main_tag_query(input):
 	indices = []
 	for i, data in enumerate(main_tag_list):
@@ -30,14 +31,14 @@ def get_main_tag_query(input):
 
 
 with open('../json_db_lite.json') as json_file:
-    data = json.load(json_file)
+	data = json.load(json_file)
 #https://mongoengine-odm.readthedocs.io/guide/querying.html
 #for query operators
 #taiwan_users = Posting.objects(location='taiwan')
 
 @app.route("/", methods=['GET'])
 def main():
-    return render_template('index.html')
+	return render_template('index.html')
 
 @app.route('/querying', methods=['GET', 'POST'])
 def querying():
@@ -117,6 +118,10 @@ def querying():
 	if len(contains) > 2:
 		contains = contains[:2]
 
+	if main_tag != "":
+		data = get_main_tag_query(main_tag)
+		return render_template('displaying.html', data=data)
+
 	# images = False
 	# users = False
 	# numbers = False
@@ -126,7 +131,7 @@ def querying():
 	# contains
 
 	return render_template('displaying.html')
-    # return render_template('greeting.html', say=request.form['say'], to=request.form['to'])
+	# return render_template('greeting.html', say=request.form['say'], to=request.form['to'])
 
 if __name__ == "__main__":
-    app.run(port=5002,debug=True)
+	app.run(port=5002,debug=True)

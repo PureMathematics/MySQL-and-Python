@@ -129,8 +129,8 @@ body {
 <body>
 
 <div class="header">
-  <h1>My Website</h1>
-  <p>A <b>responsive</b> website created by me.</p>
+  <h1>InstaGrowth</h1>
+  <p>How to grow your Instagram Presence</p>
 </div>
 
 <div class="navbar">
@@ -159,9 +159,9 @@ body {
   <div class="main">
     <h2>INSTAGRAM SEARCHING</h2>
     <h5>This WebApp will help improve your Instagram posts by showing similar ones.<br>Forms with a * are mandatory.</h5>        
-    <br>What do you want to see?*<br>You may select more than one.<br><br>
+    <br>What do you want to see?<br>
         <form action="/querying" method = "post"> <!-- action="/action_page.php"> -->
-
+<!-- 
         <input type="checkbox" id="images" name="images" value=True>
         <label for="images">Images</label><br>
         
@@ -173,14 +173,19 @@ body {
         <td class="label1"></td>
         <td align="right">
         <label for="numbers">Minimum Likes</label>
-            <input type="text" disabled name="min_likes" id="min_likes"></i></button><br>
+            <input type="text" name="min_likes" id="min_likes"></i></button><br>
         <label for="numbers">Minimum Comments</label>
-            <input type="text" disabled name="min_comments" id="min_comments"></i></button>
+            <input type="text" name="min_comments" id="min_comments"></i></button>
         <br>
-        </td><br>
-        
+        </td><br> -->
+        <br>
+        <label for="numbers">Minimum Likes</label>
+            <input type="text" name="min_likes" id="min_likes"></i></button><br>
+        <label for="numbers">Minimum Comments</label>
+            <input type="text" name="min_comments" id="min_comments"></i></button><br>
        
-        <label for="hashtag">What is your city's hashtag?<br>e.g. nyc, london, paris:</label><br><br>
+        <br>
+        <label for="hashtag">What is your city's hashtag?<br>e.g. nyc, london, paris:</label><br>
         <input type="text" id="hashtag" name="hashtag"><br>
         
         <br>What does your image contain?<br>

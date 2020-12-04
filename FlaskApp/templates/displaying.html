@@ -119,18 +119,15 @@ body {
   }
 }
 <script>
-  function myFunction(){
-  document.getElementById("add_message").innerHTML = 
-  '<div class="message">Add Message<br>Title: <input type="text" id="title"><br>Text: <input type="text" id="message"><br><br></div>
-  }
+
 </script>
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>My Website</h1>
-  <p>A <b>responsive</b> website created by me.</p>
+  <h1>InstaGrowth</h1>
+  <p>How to grow your Instagram Presence</p>
 </div>
 
 <div class="navbar">
@@ -158,8 +155,33 @@ body {
   </div>
   <div class="main">
     <h2>INSTAGRAM SEARCHING</h2>
-    <h5>This WebApp will help improve your Instagram posts by showing similar ones.<br>Forms with a * are mandatory.</h5>        
+    <h5>This WebApp will help improve your Instagram posts by showing similar ones.</h5>        
     <br>Returned Query Data<br><br>
+
+
+        {%for l in data%}
+          <img src={{l}} width="300" height="300"><br>
+        {% endfor %}
+
+<!--         <br>Image:
+        <img src={{data[0].im_640}} width="300" height="300"><br>
+        Username: {{data[0].username}}<br>
+        City: {{data[0].main_tag}}<br>
+        Likes: {{data[0].likes}}<br>
+        Comments: {{data[0].comments}}<br>
+        Contains: {{data[0].contains}}<br>
+        Timestamp: {{data[0].timestamp}}<br>
+        Location: {{data[0].locations}}<br><br>
+      
+        <br>Image:
+        <img src={{data[1].im_640}} width="300" height="300"><br>
+        Username: {{data[1].username}}<br>
+        City: {{data[1].main_tag}}<br>
+        Likes: {{data[1].likes}}<br>
+        Comments: {{data[1].comments}}<br>
+        Contains: {{data[1].contains}}<br>
+        Timestamp: {{data[1].timestamp}}<br>
+        Location: {{data[1].locations}}<br><br> -->
 
         <form action="/">
         <br><input type="submit" value="Back">
