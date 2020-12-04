@@ -19,10 +19,10 @@ class CityApi(Resource):
         City.objects.get(post_id=post_id).update(**body)
         return '', 200
 
-    def delete(self, id):
-        city = City.objects.get(id=id).delete()
+    def delete(self, post_id):
+        city = City.objects.get(post_id=post_id).delete()
         return '', 200
 
-    def get(self, id):
-        cities = City.objects.get(id=id).to_json()
+    def get(self, post_id):
+        cities = City.objects.get(post_id=post_id).to_json()
         return Response(cities, mimetype="application/json", status=200)

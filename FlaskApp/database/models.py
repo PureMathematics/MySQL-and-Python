@@ -8,4 +8,5 @@ class City(db.Document):
     tags = db.ListField(db.StringField(), required=False)
     caption = db.StringField(required=False, unique=False)
     accessibility_caption = db.ListField(db.StringField(), required=False)
-    timestamp = db.StringField(required=False, unique=False)
+    timestamp = db.StringField(required=True, unique=False)
+    username = db.StringField(required=True, unique=False)
