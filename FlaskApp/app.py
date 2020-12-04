@@ -87,7 +87,7 @@ def get_comments_likes_query(input1, input2):
 	mlt2 = [mlt1[i] for i in indices2]
 	return mlt2, usl2, iml2
 
-def get_main_tag_comments_query(input, input2):
+def get_main_tag_comments_query(input1, input2):
 	indices = []
 	for i, data in enumerate(comments_list):
 		if int(data) >= int(input2):
