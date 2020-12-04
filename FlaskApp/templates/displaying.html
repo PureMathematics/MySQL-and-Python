@@ -158,30 +158,17 @@ body {
     <h5>This WebApp will help improve your Instagram posts by showing similar ones.</h5>        
     <br>Returned Query Data<br><br>
 
-
-        {%for l in data%}
-          <img src={{l}} width="300" height="300"><br>
+        {%for i in im%}
+          <img src={{i}} width="300" height="300"><br>
         {% endfor %}
 
-<!--         <br>Image:
-        <img src={{data[0].im_640}} width="300" height="300"><br>
-        Username: {{data[0].username}}<br>
-        City: {{data[0].main_tag}}<br>
-        Likes: {{data[0].likes}}<br>
-        Comments: {{data[0].comments}}<br>
-        Contains: {{data[0].contains}}<br>
-        Timestamp: {{data[0].timestamp}}<br>
-        Location: {{data[0].locations}}<br><br>
-      
-        <br>Image:
-        <img src={{data[1].im_640}} width="300" height="300"><br>
-        Username: {{data[1].username}}<br>
-        City: {{data[1].main_tag}}<br>
-        Likes: {{data[1].likes}}<br>
-        Comments: {{data[1].comments}}<br>
-        Contains: {{data[1].contains}}<br>
-        Timestamp: {{data[1].timestamp}}<br>
-        Location: {{data[1].locations}}<br><br> -->
+        {%for u in us%}
+          Username: {{u}}<br>
+        {% endfor %}
+
+        {%for m in ml%}
+          City: {{m}}<br>
+        {% endfor %}
 
         <form action="/">
         <br><input type="submit" value="Back">

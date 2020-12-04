@@ -10,44 +10,183 @@ connect('Post', port=27017)
 
 #JSON PARSING and Saving into DB
 with open('../json_db_lite.json') as json_file:
-    data = json.load(json_file)
-    for p in data['post']:
-        posting = Posting(post_id = p['post_id'],likes = p['likes'], main_tag = p['main_tag'])
+	data = json.load(json_file)
+	for p in data['post']:
+		posting = Posting(post_id = p['post_id'],likes = p['likes'], main_tag = p['main_tag'])
+
 main_tag_list = []
 image_list = []
 contains_list = []
+username_list = []
+likes_list = []
+comments_list = []
+locations_list = []
+
 with open('../json_db_lite.json') as json_file:
-    data = json.load(json_file)
-    for p in data['post']:
+	data = json.load(json_file)
+	for p in data['post']:
 		main_tag_list.append(p['main_tag'])
 		image_list.append(p['im_640'])
-		contains_list.append(p['contains'][:2])
+		username_list.append(p['username'])
+		likes_list.append(p['likes'])
+		comments_list.append(p['comments'])
+		locations_list.append(p['locations'])
+		if p['contains']:
+			contains_list.append(p['contains'])
+		else:
+			contains_list.append("")
+
+def get_main_tag_likes_comments_query(input1, input2, input3):
+	indices = []
+	for i, data in enumerate(likes_list):
+		if int(data) >= int(input2):
+			indices.append(i)
+	iml1 = [image_list[i] for i in indices]
+	usl1 = [username_list[i] for i in indices]
+	mlt1 = [main_tag_list[i] for i in indices]
+	cl1 = [comments_list[i] for i in indices]
+
+	indices2 = []
+	for i, data in enumerate(cl1):
+		if int(data) >= int(input3):
+			indices2.append(i)
+	iml2 = [iml1[i] for i in indices2]
+	usl2 = [usl1[i] for i in indices2]
+	mlt2 = [mlt1[i] for i in indices2]
+
+	indices3 = []
+	for i, data in enumerate(mlt2):
+		if data == input1:
+			indices3.append(i)
+	iml = [iml2[i] for i in indices3]
+	usl = [usl2[i] for i in indices3]
+	mlt = [mlt2[i] for i in indices3]
+	return mlt, usl, iml
+
+def get_comments_likes_query(input1, input2):
+	print(input1)
+	print(input2)
+	indices = []
+	print("LENGTH IMG LIST")
+	print(len(image_list))
+	for i, data in enumerate(likes_list):
+		if int(data) >= int(input1):
+			indices.append(i)
+	iml1 = [image_list[i] for i in indices]
+	usl1 = [username_list[i] for i in indices]
+	mlt1 = [main_tag_list[i] for i in indices]
+	cl1 = [comments_list[i] for i in indices]
+
+	indices2 = []
+	for i, data in enumerate(cl1):
+		if int(data) >= int(input2):
+			indices2.append(i)
+
+	iml2 = [iml1[i] for i in indices2]
+	usl2 = [usl1[i] for i in indices2]
+	mlt2 = [mlt1[i] for i in indices2]
+	return mlt2, usl2, iml2
+
+def get_main_tag_comments_query(input, input2):
+	indices = []
+	for i, data in enumerate(comments_list):
+		if int(data) >= int(input2):
+			indices.append(i)
+	iml1 = [image_list[i] for i in indices]
+	usl1 = [username_list[i] for i in indices]
+	mlt1 = [main_tag_list[i] for i in indices]
+	indices2 = []
+	for i, data in enumerate(mlt1):
+		if data == input1:
+			indices2.append(i)
+	iml = [iml1[i] for i in indices2]
+	usl = [usl1[i] for i in indices2]
+	mlt = [mlt1[i] for i in indices2]
+	return mlt, usl, iml
+
+def get_main_tag_likes_query(input1, input2):
+	indices = []
+	for i, data in enumerate(likes_list):
+		if int(data) >= int(input2):
+			indices.append(i)
+	iml1 = [image_list[i] for i in indices]
+	usl1 = [username_list[i] for i in indices]
+	mlt1 = [main_tag_list[i] for i in indices]
+	indices2 = []
+	for i, data in enumerate(mlt1):
+		if data == input1:
+			indices2.append(i)
+	iml = [iml1[i] for i in indices2]
+	usl = [usl1[i] for i in indices2]
+	mlt = [mlt1[i] for i in indices2]
+	return mlt, usl, iml
+
+def get_comments_query(input):
+	indices = []
+	for i, data in enumerate(comments_list):
+		if int(data) >= int(input):
+			indices.append(i)
+
+	iml = [image_list[i] for i in indices]
+	usl = [username_list[i] for i in indices]
+	mlt = [main_tag_list[i] for i in indices]
+	return mlt, usl, iml
+
+def get_likes_query(input):
+	indices = []
+	for i, data in enumerate(likes_list):
+		if int(data) >= int(input):
+			indices.append(i)
+
+	iml = [image_list[i] for i in indices]
+	usl = [username_list[i] for i in indices]
+	mlt = [main_tag_list[i] for i in indices]
+	return mlt, usl, iml
+
 def get_main_tag_query(input):
 	indices = []
 	for i, data in enumerate(main_tag_list):
 		if data == input:
 			indices.append(i)
-	return [image_list[i] for i in indices]
+
+	iml = [image_list[i] for i in indices]
+	usl = [username_list[i] for i in indices]
+	mlt = [main_tag_list[i] for i in indices]
+	return mlt, usl, iml
 
 def get_contains_query(input):
 	indices = []
 	for i, data in enumerate(contains_list):
-		if data[0] == input or data[1] == [input]:
+		# print(data)
+		for j in range(0, len(data)):
+			if data[j] == input[0]:
+				indices.append(i)
+
+	iml = [image_list[i] for i in indices]
+	usl = [username_list[i] for i in indices]
+	mlt = [main_tag_list[i] for i in indices]
+	return mlt, usl, iml
+
+def get_main_tag_contains_query(input, ml, us, im):
+	indices = []
+	for i, data in enumerate(ml):
+		if data == input:
 			indices.append(i)
-	return [image_list[i] for i in indices]
 
-	
-
+	iml1 = [im[i] for i in indices]
+	usl1 = [us[i] for i in indices]
+	mlt1 = [ml[i] for i in indices]
+	return mlt1, usl1, iml1
 
 with open('../json_db_lite.json') as json_file:
-    data = json.load(json_file)
+	data = json.load(json_file)
 #https://mongoengine-odm.readthedocs.io/guide/querying.html
 #for query operators
 #taiwan_users = Posting.objects(location='taiwan')
 
 @app.route("/", methods=['GET'])
 def main():
-    return render_template('index.html')
+	return render_template('index.html')
 
 @app.route('/querying', methods=['GET', 'POST'])
 def querying():
@@ -124,8 +263,43 @@ def querying():
 	if request.form.get('season'):
 		season = request.form['season']
 
-	if len(contains) > 2:
-		contains = contains[:2]
+	if len(contains) > 1:
+		contains = contains[0]
+
+	if main_tag != "" and min_likes != 0 and min_comments != 0:
+		ml, us, im = get_main_tag_likes_comments_query(main_tag, min_likes, min_comments)
+		return render_template('displaying.html', ml = ml, us = us, im = im)
+
+	elif contains:
+		print(contains)
+		ml, us, im = get_contains_query(contains)
+		if main_tag != "":
+			ml, us, im = get_main_tag_contains_query(main_tag, ml, us, im)
+		return render_template('displaying.html', ml = ml, us = us, im = im)
+
+	elif main_tag == "" and min_likes != 0 and min_comments != 0:
+		ml, us, im = get_comments_likes_query(min_likes, min_comments)
+		return render_template('displaying.html', ml = ml, us = us, im = im)	
+	
+	elif main_tag != "" and min_likes == 0 and min_comments != 0:
+		ml, us, im = get_main_tag_comments_query(main_tag, min_likes)
+		return render_template('displaying.html', ml = ml, us = us, im = im)		
+
+	elif main_tag != "" and min_likes != 0 and min_comments == 0:
+		ml, us, im = get_main_tag_likes_query(main_tag, min_likes)
+		return render_template('displaying.html', ml = ml, us = us, im = im)
+
+	elif main_tag != "" and min_likes == 0 and min_comments == 0:
+		ml, us, im = get_main_tag_query(main_tag)
+		return render_template('displaying.html', ml = ml, us = us, im = im)
+
+	elif main_tag == "" and min_likes == 0 and min_comments != 0:
+		ml, us, im = get_comments_query(min_comments)
+		return render_template('displaying.html', ml = ml, us = us, im = im)
+
+	elif main_tag == "" and min_likes != 0 and min_comments == 0:
+		ml, us, im = get_likes_query(min_likes)
+		return render_template('displaying.html', ml = ml, us = us, im = im)
 
 	# images = False
 	# users = False
@@ -136,7 +310,7 @@ def querying():
 	# contains
 
 	return render_template('displaying.html')
-    # return render_template('greeting.html', say=request.form['say'], to=request.form['to'])
+	# return render_template('greeting.html', say=request.form['say'], to=request.form['to'])
 
 if __name__ == "__main__":
-    app.run(port=5002,debug=True)
+	app.run(port=5002,debug=True)
