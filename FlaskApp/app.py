@@ -1,16 +1,14 @@
 from flask import Flask, request, Response, render_template, redirect
-from database.db import initialize_db
-from flask_restful import Api
-from resources.routes import initialize_routes
+from database.models import Posting
+from mongoengine import connect
 
 app = Flask(__name__)
-api = Api(app)
-app.config['MONGODB_SETTINGS'] = {
- 'host': 'mongodb://localhost/city-list'
-}
-db = initialize_db(app)
-initialize_routes(api)
+# #local host port 27017
+connect('Post', port=27017)
 
+
+#create random data
+posting = Posting(post_id = 1002134214320)
 #APIs
 @app.route("/", methods=['GET'])
 def main():
