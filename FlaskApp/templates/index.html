@@ -160,15 +160,15 @@ body {
     <h2>INSTAGRAM SEARCHING</h2>
     <h5>This WebApp will help improve your Instagram posts by showing similar ones.<br>Forms with a * are mandatory.</h5>        
     <br>What do you want to see?*<br>You may select more than one.<br><br>
-        <form action="/action_page.php">
+        <form action="/querying" method = "post"> <!-- action="/action_page.php"> -->
 
-        <input type="checkbox" id="images" name="images" value="Images">
+        <input type="checkbox" id="images" name="images" value=True>
         <label for="images">Images</label><br>
         
-        <input type="checkbox" id="users" name="users" value="Users">
+        <input type="checkbox" id="users" name="users" value=True>
         <label for="users">Users</label><br>
         
-        <input type="checkbox"  id="numbers" name = "numbers" value = "Numbers" onchange="document.getElementById('min_likes').disabled = !this.checked; document.getElementById('min_comments').disabled = !this.checked; "/><label for="numbers"> Numbers</label><br><br>
+        <input type="checkbox"  id="numbers" name = "numbers" value = True onchange="document.getElementById('min_likes').disabled = !this.checked; document.getElementById('min_comments').disabled = !this.checked; "/><label for="numbers"> Numbers</label><br><br>
 
         <td class="label1"></td>
         <td align="right">
@@ -180,13 +180,10 @@ body {
         </td><br>
         
        
-        <label for="fname">What is your city's hashtag?*<br>e.g. nyc, london, paris:</label><br><br>
-        <input type="text" id="fname" name="fname"><br>
+        <label for="hashtag">What is your city's hashtag?<br>e.g. nyc, london, paris:</label><br><br>
+        <input type="text" id="hashtag" name="hashtag"><br>
         
         <br>What does your image contain?<br>
-
-        <input type="checkbox" id="c_selfie" name="c_selfie" value="c_selfie">
-        <label for="c_selfie">Selfie</label><br>
 
         <input type="checkbox" id="c_oneperson" name="c_oneperson" value="1 person">
         <label for="c_oneperson">One person</label><br>
@@ -197,19 +194,22 @@ body {
         <input type="checkbox" id="c_oneperson" name="c_twopeople" value="2 people">
         <label for="c_oneperson">Two people</label><br>
 
-        <input type="checkbox" id="c_closeup" name="c_closeup" value="c_closeup">
+        <input type="checkbox" id="c_selfie" name="c_selfie" value="selfie">
+        <label for="c_selfie">Selfie</label><br>
+
+        <input type="checkbox" id="c_closeup" name="c_closeup" value="closeup">
         <label for="c_closeup">Closeup</label><br>
 
-        <input type="checkbox" id="c_beard" name="c_beard" value="c_beard">
+        <input type="checkbox" id="c_beard" name="c_beard" value="beard">
         <label for="c_beard">Beard</label><br>
 
-        <input type="checkbox" id="c_sunglasses" name="c_sunglasses" value="c_sunglasses">
+        <input type="checkbox" id="c_sunglasses" name="c_sunglasses" value="sunglasses">
         <label for="c_sunglasses">Sunglasses</label><br>
 
-        <input type="checkbox" id="c_hat" name="c_hat" value="c_hat">
+        <input type="checkbox" id="c_hat" name="c_hat" value="hat">
         <label for="c_hat">Hat</label><br>
         
-        <input type="checkbox" id="c_shoes" name="c_shoes" value="c_shoes">
+        <input type="checkbox" id="c_shoes" name="c_shoes" value="shoes">
         <label for="c_shoes">Shoes</label><br>
         
         <input type="checkbox" id="c_peoplestanding" name="c_peoplestanding" value="people standing">
@@ -218,35 +218,31 @@ body {
         <input type="checkbox" id="c_peoplesitting" name="c_peoplesitting" value="people sitting">
         <label for="c_peoplesitting">People sitting</label><br>
         
-        <input type="checkbox" id="c_night" name="c_night" value="c_night">
+        <input type="checkbox" id="c_night" name="c_night" value="night">
         <label for="c_night">Night</label><br>
         
-        <input type="checkbox" id="c_outdoor" name="c_outdoor" value="c_outdoor">
+        <input type="checkbox" id="c_outdoor" name="c_outdoor" value="outdoor">
         <label for="c_outdoor">Outdoor</label><br>
 
-        <input type="checkbox" id="c_indoor" name="c_indoor" value="c_indoor">
+        <input type="checkbox" id="c_indoor" name="c_indoor" value="indoor">
         <label for="c_indoor">Indoor</label><br>
         
-        <input type="checkbox" id="c_sky" name="c_sky" value="c_sky">
+        <input type="checkbox" id="c_sky" name="c_sky" value="sky">
         <label for="c_sky">Sky</label><br>
         
-        <input type="checkbox" id="c_water" name="c_water" value="c_water">
+        <input type="checkbox" id="c_water" name="c_water" value="water">
         <label for="c_water">Water</label><br>
 
-        <input type="checkbox" id="c_ocean" name="c_ocean" value="c_ocean">
+        <input type="checkbox" id="c_ocean" name="c_ocean" value="ocean">
         <label for="c_ocean">Ocean</label><br>
 
-        <input type="checkbox" id="c_water" name="c_water" value="standing">
-        <label for="c_water">Water</label><br>
-
-        <input type="checkbox" id="c_nature" name="c_nature" value="c_nature">
+        <input type="checkbox" id="c_nature" name="c_nature" value="nature">
         <label for="c_nature">Nature</label><br>
-        
        
-        <input type="checkbox" id="c_plant" name="c_plant" value="c_plant">
+        <input type="checkbox" id="c_plant" name="c_plant" value="plant">
         <label for="c_plant">Plant</label><br>
 
-        <input type="checkbox" id="c_bridge" name="c_bridge" value="c_bridge">
+        <input type="checkbox" id="c_bridge" name="c_bridge" value="bridge">
         <label for="c_bridge">Bridge</label><br>
         
 
@@ -276,7 +272,6 @@ body {
         
         <br><input type="submit" value="Submit">
         </form> 
-    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
     <br>
   </div>
 </div>
