@@ -13,8 +13,24 @@ with open('../json_db_lite.json') as json_file:
     data = json.load(json_file)
     for p in data['post']:
         posting = Posting(post_id = p['post_id'],likes = p['likes'], main_tag = p['main_tag'])
+main_tag_list = []
+image_list = []
+with open('../json_db_lite.json') as json_file:
+    data = json.load(json_file)
+    for p in data['post']:
+		main_tag.append(p['main_tag'])
+		image_list.append(p['im_640'])
+def get_main_tag_query(input):
+	indices = []
+	for i, data in enumerate(main_tag_list):
+		if data == input:
+			indices.append(i)
+	return [image_list[i] for i in indices]
 
-print(Posting.take_nyc())
+
+
+with open('../json_db_lite.json') as json_file:
+    data = json.load(json_file)
 #https://mongoengine-odm.readthedocs.io/guide/querying.html
 #for query operators
 #taiwan_users = Posting.objects(location='taiwan')
