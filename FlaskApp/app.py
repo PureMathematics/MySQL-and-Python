@@ -1,15 +1,29 @@
 from flask import Flask, request, Response, render_template, redirect
 from database.models import Posting
 from mongoengine import connect
+import json
 
 app = Flask(__name__)
 # #local host port 27017
 connect('Post', port=27017)
 
-
 #create random data
 posting = Posting(post_id = 1002134214320)
 #APIs
+
+#JSON PARSING and Saving into DB
+with open('../json_db_lite.json') as json_file:
+    data = json.load(json_file)
+    for p in data['post']:
+        posting = Posting(post_id = p['post_id'])
+
+for post in Posting.objects:
+    print(post.post_id)
+
+#https://mongoengine-odm.readthedocs.io/guide/querying.html
+#for query operators
+#taiwan_users = Posting.objects(location='taiwan')
+
 @app.route("/", methods=['GET'])
 def main():
     return render_template('index.html')
