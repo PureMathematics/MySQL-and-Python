@@ -35,11 +35,11 @@ Obtaining more data:
 
 Install instagram-scraper with
 
-$ pip install instagram-scraper. 
+	$ pip install instagram-scraper. 
 
-To scrapte more data, run:
+To scrape more data, run:
 
-$instagram-scraper cityname --tag --media-metadata --media-types none
+	$ instagram-scraper cityname --tag --media-metadata --media-types none
 
 This will download a json containing the top 9 posts with that tag. 
 
