@@ -12,7 +12,47 @@ connect('Post', port=27017)
 with open('../json_db_lite.json') as json_file:
 	data = json.load(json_file)
 	for p in data['post']:
-		posting = Posting(post_id = p['post_id'],likes = p['likes'], main_tag = p['main_tag'])
+		posting = Posting(post_id = p['post_id'],likes = p['likes'], main_tag = p['main_tag'], contains = p['contains'], timestamp = p['timestamp'], locations = p['locations'], username = p['username'], im_640 = p['im_640'])
+
+def get_query_main_tag_likes_comments(input1,input2, input3):
+	myquery = {"main_tag": input1, "likes":{ "$gt": input2 }, "comments":{ "$gt": input3 }}
+	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
+
+def get_query_main_tag_likes_comments(input1,input2, input3):
+	myquery = {"main_tag": input1, "likes":{ "$gt": input2 }, "comments":{ "$gt": input3 }}
+	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
+
+def get_query_main_tag_likes(input1, input2):
+	myquery = {"main_tag": input1, "likes":{ "$gt": input2 }}
+	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
+
+def get_query_main_tag_comments(input1):
+	myquery = {"main_tag": input1, "comments":{ "$gt": input1 }}
+	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
+
+def get_query_comments_likes(input1, input2):
+	myquery = {"likes": { "$gt": input2 }, "comments":{ "$gt": input2 }}
+	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
+
+def get_query_main_tag(input1):
+	myquery = {"main_tag": input1}
+	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
+
+def get_query_comments(input1):
+	myquery = {"comments" : { "$gt": input1 }}
+	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
+
+def get_query_likes(input1):
+	myquery = {"likes" : { "$gt": input1 }}
+	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
+
+def get_query_contains(input1):
+	myquery = {"contains" : input1}
+	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
+
+def get_query_main_tag_contains(input1, input2):
+	myquery = {"contains": input1, "main_tag": input2}
+	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
 
 main_tag_list = []
 image_list = []
@@ -22,6 +62,11 @@ likes_list = []
 comments_list = []
 locations_list = []
 
+#https://mongoengine-odm.readthedocs.io/guide/querying.html
+#for query operators
+#taiwan_users = Posting.objects(location='taiwan')
+
+# TESTING
 with open('../json_db_lite.json') as json_file:
 	data = json.load(json_file)
 	for p in data['post']:
@@ -35,42 +80,6 @@ with open('../json_db_lite.json') as json_file:
 			contains_list.append(p['contains'])
 		else:
 			contains_list.append("")
-
-# def get_query_main_tag_likes_comments(input1,input2, input3):
-# 	myquery = {"main_tag": input1, "likes":{ "$gt": input2 }"comments":{ "$gt": input3 }}
-# 	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
-
-# def get_query_main_tag_likes(input1, input2):
-# 	myquery = {"main_tag": input1, "likes":{ "$gt": input2 }}
-# 	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
-
-# def get_query_main_tag_comments(input1):
-# 	myquery = {"main_tag": input1, "comments":{ "$gt": input1 }}
-# 	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
-
-# def get_query_comments_likes(input1, input2):
-# 	myquery = {"likes": { "$gt": input2 }, "comments":{ "$gt": input2 }}
-# 	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
-
-# def get_query_main_tag(input1):
-# 	myquery = {"main_tag": input1}
-# 	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
-
-# def get_query_comments(input1):
-# 	myquery = {"comments" : { "$gt": input1 }}
-# 	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
-
-# def get_query_likes(input1):
-# 	myquery = {"likes" : { "$gt": input1 }}
-# 	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
-
-# def get_query_contains(input1):
-# 	myquery = {"contains:" input1}
-# 	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
-
-# def get_query_main_tag_contains(input1, input2):
-# 	myquery = {"contains": input1, "main_tag": input2}
-# 	return mycol.find(myquery,{"im_640":1, "username":1, "main_tag":1, "likes":0, "comments":0, "locations":0, "contains":0, "post_id":0, "timestamp":0})
 
 def get_main_tag_likes_comments_query(input1, input2, input3):
 	indices = []

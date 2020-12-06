@@ -96,17 +96,17 @@ def data_from_json_text(filename, of, pl, data_dict):
 				data_dict['post'].append({
 					'post_id':post_id,
 					'main_tag':main_tag,
-					'shortcode':shortcode,
+					#'shortcode':shortcode,
 					'likes':likes,
 					'comments':comments,
-					'caption':caption,
-					'owner_id':owner_id,
+					#'caption':caption,
+					#'owner_id':owner_id,
 					'username':username,
 					'contains':contains,
 					'timestamp':time_conv,
 					'locations':location,
-					'tags':tags,
-					'profile_pic':profile_pic,
+					#'tags':tags,
+					#'profile_pic':profile_pic,
 					'im_640':im_640
 				})
 
@@ -152,7 +152,7 @@ if __name__ == "__main__":
 	# print("--- %s seconds ---" % (time.time() - start_time))
 
 
-	with open('json_db.json', 'w') as outfile:
+	with open('json_db_lite.json', 'w') as outfile:
 		json.dump(data_dict, outfile, indent = 4)
 
 	# with open('temp_json.json','r') as infile:
