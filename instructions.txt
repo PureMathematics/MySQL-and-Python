@@ -20,11 +20,11 @@ Running Instructions:
 
 To start the MongoDB database, in another terminal, run:
 
-	$mongod --config /usr/local/etc/mongod.conf
+	$ mongod --config /usr/local/etc/mongod.conf
 
 Then, navigate to ../MySQL-and-Python/FlaskApp and run:
 
-	$python app.py
+	$ python app.py
 
 This python file is the backend for our project and takes care of all the data loading for MongoDB. The data is json_db_lite.json, and is automatically read in and loaded into the database by app.py.
 
