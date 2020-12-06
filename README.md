@@ -33,9 +33,15 @@ If more data is wanted, you can load a json into that folder and run ../MySql-an
 
 Obtaining more data:
 
-Install instagram-scraper with pip install instagram-scraper. 
+Install instagram-scraper with
 
-Run $instagram-scraper cityname --tag --media-metadata --media-types none to download a json containing the top 9 posts with that tag. 
+$ pip install instagram-scraper. 
+
+To scrapte more data, run:
+
+$instagram-scraper cityname --tag --media-metadata --media-types none
+
+This will download a json containing the top 9 posts with that tag. 
 
 WARNING: As of Dec 6, 2020, there is still a block on instagram's API due to the election results and the spread of fake information. It may not be possible to pull a new json or run json_to_db.py due to these limitations.
 
