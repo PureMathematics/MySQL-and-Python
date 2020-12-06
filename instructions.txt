@@ -1,5 +1,5 @@
 CS6400 
-David Lim, Eric Hiesh, Jiajie Lin
+David Lim, Eric Hsieh, Jiajie Lin
 
 Installing Instructions:
 
