@@ -12,6 +12,7 @@ This was tested on Friday, Dec. 4 on MacOS with:
 For Python, this project was run on Python version 3.7.3 with the following packages:
 
 	Flask, install with $ pip install flask
+	MongoEngine, install with $ pip install mongoengine
 	Requests, install with $ pip install requests
 	Simplejson, install with $ pip install simplejson
 
