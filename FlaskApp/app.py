@@ -321,38 +321,38 @@ def querying():
 
 	if main_tag != "" and min_likes != 0 and min_comments != 0:
 		ml, us, im = get_main_tag_likes_comments_query(main_tag, min_likes, min_comments)
-		return render_template('displaying.html', ml = ml, us = us, im = im)
+		return render_template('displaying.html', ml = ml, us = us, im = im, main_tag = main_tag, min_likes = min_likes, min_comments = min_comments)
 
 	elif contains:
 		print(contains)
 		ml, us, im = get_contains_query(contains)
 		if main_tag != "":
 			ml, us, im = get_main_tag_contains_query(main_tag, ml, us, im)
-		return render_template('displaying.html', ml = ml, us = us, im = im)
+		return render_template('displaying.html', ml = ml, us = us, im = im, main_tag = main_tag, contains = contains)
 
 	elif main_tag == "" and min_likes != 0 and min_comments != 0:
 		ml, us, im = get_comments_likes_query(min_likes, min_comments)
-		return render_template('displaying.html', ml = ml, us = us, im = im)	
+		return render_template('displaying.html', ml = ml, us = us, im = im, min_likes = min_likes, min_comments = min_comments, contains = contains)	
 	
 	elif main_tag != "" and min_likes == 0 and min_comments != 0:
 		ml, us, im = get_main_tag_comments_query(main_tag, min_comments)
-		return render_template('displaying.html', ml = ml, us = us, im = im)		
+		return render_template('displaying.html', ml = ml, us = us, im = im, main_tag = main_tag, min_comments = min_comments, contains = contains)		
 
 	elif main_tag != "" and min_likes != 0 and min_comments == 0:
 		ml, us, im = get_main_tag_likes_query(main_tag, min_likes)
-		return render_template('displaying.html', ml = ml, us = us, im = im)
+		return render_template('displaying.html', ml = ml, us = us, im = im, main_tag = main_tag, min_comments = min_comments, contains = contains)
 
 	elif main_tag != "" and min_likes == 0 and min_comments == 0:
 		ml, us, im = get_main_tag_query(main_tag)
-		return render_template('displaying.html', ml = ml, us = us, im = im)
+		return render_template('displaying.html', ml = ml, us = us, im = im, main_tag = main_tag, contains = contains)
 
 	elif main_tag == "" and min_likes == 0 and min_comments != 0:
 		ml, us, im = get_comments_query(min_comments)
-		return render_template('displaying.html', ml = ml, us = us, im = im)
+		return render_template('displaying.html', ml = ml, us = us, im = im, min_comments = min_comments, contains = contains)
 
 	elif main_tag == "" and min_likes != 0 and min_comments == 0:
 		ml, us, im = get_likes_query(min_likes)
-		return render_template('displaying.html', ml = ml, us = us, im = im)
+		return render_template('displaying.html', ml = ml, us = us, im = im, min_likes = min_likes, contains = contains)
 
 	# images = False
 	# users = False
